@@ -1,17 +1,49 @@
 ---
 title: "Introduction - Analyse de données et Probabilités"
-author: "Arsène"
-format: pdf
-editor: visual
+author: "Arsène MBABEH - Raphaël PÉNÉ - Oscar JOSEPH--GENESLAY"
 lang: fr
+editor: visual
+format:
+  pdf:
+    template: template.tex
+    pdf-engine: xelatex
+    cite-method: biblatex
+    keep-tex: true
+    include-in-header: 
+      text: |
+        \makeatletter
+        \@ifundefined{c@none}{\newcounter{none}}{}
+        \makeatother
+
+bibliography: Ref.bibtex
+biblio-style: apa
+
+number-sections: true
+toc: false
+
 resource_files:
-- keno_202511 6.csv
-- Projet Initial.html
+  - keno_202511 6.csv
+  - Projet Initial.html
 ---
+
+### Package
+
+```{r}
+
+### Installation des packages
+#install.packages("dplyr")
+#install.packages("kableExtra")
+#install.packages("stargazer")
+#install.packages("ggplot2")
+#install.packages("ggthemes")
+#install.packages("tidyr")
+#install.packages("lubridate")
+
+```
 
 # Introduction
 
-Ce projet explore différents aspects de la statistique : de la théorie des lois de probabilité à l'analyse de données réelles (Keno) en s'inspirant de l'article @https://doi.org/10.1111/test.12409.
+Ce projet explore différents aspects de la statistique : de la théorie des lois de probabilité à l'analyse de données réelles (Keno) en s'inspirant de l'article [@Evans2024].
 
 ## 1. Probabilités Théoriques
 
@@ -28,7 +60,7 @@ x <- 0:10
 dx <- dpois(x, lambda = 3)
 
 plot(x, dx, type = "h", lwd = 2, col = "steelblue",
-     main = "Loi de Poisson (λ = 3)",
+     main = expression("Loi de Poisson (" * lambda == 3 * ")"),
      xlab = "Nombre d'événements", ylab = "Probabilité")
 points(x, dx, pch = 16, col = "steelblue")
 
@@ -65,11 +97,41 @@ curve(dgamma(x,alpha,lambda), 0, 10)
 
 ## Analyse de Données : data = "mtcars"
 
+### Analyse exploratoire
+
+Tout d'abord on commence par afficher les noms des colonnes du dataset avec la fonction ***names()***, puis on crée un résumé statistique, de tel sorte à obtenir en sortie un tableau présentant des stats (moyenne et écart-type) des variables mpg et cyl
+
+```{r}
+#| message: false
+library(dplyr)
+library(tidyverse)
+voiture <- mtcars
+
+voiture|>names() ### pour voir le nom de chaque colonne
+
+voiture |> select(mpg, cyl) |> summarise(mean_mpg = mean(mpg), mean_cyl = mean(cyl), sd_mpg = sd(mpg), sd_cyl = sd(cyl) ) |> round(2) -> stat_desc
+
+```
+
+On transforme les résultats statistiques en une matrice structurée, en entrant manuellement les valeur (moyenne , écart-type)
+
 ```{r}
 library(dplyr)
 library(kableExtra)
+library(tidyverse)
 
-# Réalisation d'une analyse exploratoire - stat desc
+stat_desc |> matrix(c(20.02, 6.19, 6.03, 1.79), nrow = 2, ncol = 2, 
+                    dimnames = list(c("mean", "sd"), c("mpg", "cyl"))) |> kable() -> matrice
+
+matrice
+```
+
+```{r}
+library(dplyr)
+library(kableExtra)
+library(tidyverse)
+
+# stat desc
 stat_desc <- mtcars |> 
   select(mpg, cyl) |> 
   summarise(
@@ -82,20 +144,18 @@ kable(stat_desc, caption = "Moyenne et Écart-type (MPG et Cylindres)") |>
   kable_styling(bootstrap_options = "striped")
 ```
 
+Nous allons ensuite analyser les corrélations entre variables, afin d'identifier si des relations linéaire existe dans notre jeu de donnée mtcars
+
+```{r}
+correlation_matrix <- cor(mtcars)
+heatmap(correlation_matrix)
+```
+
+On constate une corrélation assez faible entre la puissance et la consommation
+
 ## Regréssion Linéaire
 
 Nous cherchons à expliquer la consommation (mpg) par la puissance (hp), en utilisant le jeu de donnée mtcars
-
-```{r}
-
-### Installation des packages
-#install.packages("dplyr")
-#install.packages("kableExtra")
-#install.packages("stargazer")
-#install.packages("ggplot2")
-#install.packages("ggthemes")
-#install.packages("tidyr")
-```
 
 ```{r}
 #| results: asis
@@ -105,8 +165,8 @@ library(ggthemes)
 
 modele <- lm(mpg ~ hp, data = mtcars)
 
-# Tableau de régression avec stargazer
-stargazer(modele, type = "html", title = "Impact de la puissance sur la consommation")
+# Tableau de régression 
+summary(modele, title = "Impact de la puissance (hp) sur la consommation (mpg)")
 
 # Visualisation
 ggplot(mtcars, aes(x = hp, y = mpg)) +
@@ -116,42 +176,31 @@ ggplot(mtcars, aes(x = hp, y = mpg)) +
   labs(title = "Droite de régression", x = "Puissance (hp)", y = "Consommation (mpg)")
 ```
 
-### Analyse exploratoire
+### Interprétation :
 
-Tout d'abord on commence par afficher les noms des colonnes du dataset avec la fonction ***names()***, puis on crée un résumé statistique, de tel sorte à obtenir en sortie un tableau présentant des stats (moyenne et écart-type) des variables mpg et cyl
+***Le modèle de régression linéaire utilisé est le suivant : mpg \~ hp, ce qui signifie que la variable “mpg” est expliquée en fonction de la variable hp***
 
-```{r}
+\begin{itemize}
+  \item L’interceptt : son estimation est de 30.09, ce qui signifie que lorsque la variable hp est égale à zéro, la variable mpg est estimée à 30.09
 
-voiture <- mtcars
+  \item Le coefficient de hp : dson estimation est de -0.068, ce qui signifie que pour chaque unité d’augmentation de hp, la variable mpg diminue en moyenne de 0.068 unités
+\end{itemize}
 
-voiture|>names() ### pour voir le nom de chaque colonne
+Le R^2 est de 0.60, ce qui signifie que le modèle explique environ 60% de la variance dans la variable mpg, autrement dit la 60% de la variabilité de la mpg est expliqué par notre modele 
 
-voiture |> select(mpg, cyl) |> summarise(mean_mpg = mean(mpg), mean_cyl = mean(cyl), sd_mpg = sd(mpg), sd_cyl = sd(cyl) ) |> round(2) -> stat_desc
-
-
-```
-
-On transforme les résultats statistiques en une matrice structurée, en entrant manuellement les valeur (moyenne , écart-type)
-
-```{r}
-stat_desc |> matrix(c(20.02, 6.19, 6.03, 1.79), nrow = 2, ncol = 2, 
-                    dimnames = list(c("mean", "sd"), c("mpg", "cyl"))) |> kable() -> matrice
-
-matrice
-```
+En bref, notre modèle met en évidence le fait que la variable hp a un effet significatif sur la variable mpg. Pour chaque augmentation d’une unité de hp, la valeur de mpg va diminuer $$ \approx 0.068\ unité$$ unités
 
 ## Regression en Latex
 
 ```{r}
 #| results: asis
-#install.packages("stargazer")
 library(stargazer)
 
 modele = lm(mpg ~ hp, data = voiture)
 
 ### Pour faire le tableau 
 stargazer(modele,
-          type = "text",
+          type = "latex",
           title = "Modèle de régression du mpg expliqué par le hp",
           dep.var.labels = "mpg",
           covariate.labels = "hp",
@@ -159,7 +208,7 @@ stargazer(modele,
 
 ```
 
-### Droite de Regression
+### Regression avec ggplot
 
 ```{r}
 
@@ -172,9 +221,6 @@ voiture |> ggplot(aes(hp, mpg)) + theme_igray() + ggtitle("Consommation en fonct
 On importe les données historiques du jeu Keno, puis on transforme les données du format **large** (c'est à dire une une colonne par boule) au format **long** pour faciliter notre analyse
 
 ```{r}
-
-#install.packages("tidyr")
-#install.packages("lubridate")
 library(tidyr)
 library(lubridate)
 library(tidyr)
@@ -220,7 +266,12 @@ tableau_frequences
 
 Pour déterminer si les écarts de fréquences observés sont dus au hasard ou à un biais, nous réalisons un test de conformité à une loi uniforme, en fait on va chercher à vérifié l'équiprobabilité, c'est à dire qu'on se pose la question de savoir si toute les boules ont la même probabilité d'être tiré
 
-Sous l'hypothése $H_0$ : Les boules ont toutes la même probabilité de sortir $H_1$ : Les boules n'ont pas du tout la même probabilité de sorti
+Sous l'hypothèse
+
+\begin{itemize}
+      \item $H_0$ : Les boules ont toutes la même probabilité de sortir 
+      \item $H_1$ : Les boules n'ont pas du tout la même probabilité de sorti
+\end{itemize}
 
 NB : Notons que si la p_value \< alpha : on rejette l'hypothese null
 
@@ -230,7 +281,7 @@ chisq.test(tableau_frequences$Frequence)
 
 ```
 
-Le test de khi deux sortant une pvalue de 0,82, on conserve l'hypothése d'équiprobabilité, donc aucune boule n'est statistiquement favorisé
+Le test de khi deux sortant une pvalue de 0.82, on conserve l'hypothése d'équiprobabilité, donc aucune boule n'est statistiquement favorisé
 
 ### Simulation de Monté carlo
 
