@@ -186,7 +186,7 @@ ggplot(mtcars, aes(x = hp, y = mpg)) +
   \item Le coefficient de hp : dson estimation est de -0.068, ce qui signifie que pour chaque unité d’augmentation de hp, la variable mpg diminue en moyenne de 0.068 unités
 \end{itemize}
 
-Le R^2 est de 0.60, ce qui signifie que le modèle explique environ 60% de la variance dans la variable mpg, autrement dit la 60% de la variabilité de la mpg est expliqué par notre modele 
+Le R\^2 est de 0.60, ce qui signifie que le modèle explique environ 60% de la variance dans la variable mpg, autrement dit la 60% de la variabilité de la mpg est expliqué par notre modele
 
 En bref, notre modèle met en évidence le fait que la variable hp a un effet significatif sur la variable mpg. Pour chaque augmentation d’une unité de hp, la valeur de mpg va diminuer $$ \approx 0.068\ unité$$ unités
 

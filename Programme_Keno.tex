@@ -161,8 +161,6 @@
 \usepackage{makecell}
 
 % ── Fix bug longtable : Pandoc génère \begin{longtable}[]{} ────
-%    L'argument optionnel vide [] est interprété comme le compteur
-%    "none" qui n'existe pas → on le crée silencieusement.
 \makeatletter
 \@ifundefined{c@none}{\newcounter{none}}{}
 \makeatother
@@ -176,6 +174,10 @@
 \setlength{\parskip}{6pt}
 \setlength{\parindent}{0pt}
 
+% ── Fix de sécurité pour le bug TikZ ──────────────────────────
+\makeatletter
+\def\pgfr@layerlist@globally{}
+\makeatother
 
 % ============================================================= %
 %  DOCUMENT
@@ -204,18 +206,16 @@
   {\normalsize\bfseries Arsène MBABEH - Raphaël PÉNÉ - Oscar JOSEPH--GENESLAY}\\[0.4cm]
   {\normalsize Promotion (2025-2026)}\\[0.5cm]
   \textcolor{rulegray}{\rule{10cm}{0.4pt}}\\[1.2cm]
-  \begin{tikzpicture}
-    \node[
-      draw=cnamgray,
-      line width=0.5pt,
-      rounded corners=3pt,
-      inner sep=14pt,
-      text width=12cm,
-      align=center,
-      fill=white
-    ]{%
-      \textbf{Titre :} \textit{Analyse de donnée et probabilité};
-  \end{tikzpicture}
+  
+  % Remplacement de l'ancien bloc TikZ problématique par une boîte stable :
+  \setlength{\fboxsep}{14pt}
+  \color{cnamgray}
+  \framebox[12cm]{%
+    \begin{minipage}{11cm}
+      \centering
+      \color{black}\textbf{Titre :} \textit{Analyse de donnée et probabilité}
+    \end{minipage}
+  }
 \end{center}
 
 \vfill
@@ -572,8 +572,8 @@ unités
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy
-Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Tue, May
-12, 2026 - 10:01:31 AM
+Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Mon, May
+25, 2026 - 10:36:43 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Modèle de régression du mpg expliqué par le hp} 
