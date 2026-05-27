@@ -26,7 +26,7 @@ resource_files:
   - Projet Initial.html
 ---
 
-### Package
+#Package
 
 ```{r}
 
@@ -45,7 +45,7 @@ resource_files:
 
 Ce projet explore différents aspects de la statistique : de la théorie des lois de probabilité à l'analyse de données réelles (Keno) en s'inspirant de l'article [@Evans2024].
 
-## 1. Probabilités Théoriques
+## Probabilités Théoriques
 
 ### Loi de Poisson
 
@@ -54,6 +54,9 @@ La loi de Poisson est une loi de probabilité **discrète** qui décrit le nombr
 Si $X \sim \mathcal{P}(\lambda)$, alors : $$P(X=x)=\frac{\lambda^x}{x!}e^{-\lambda}, \quad x \in \mathbb{N}$$
 
 ```{r}
+#| error: false
+#| warning: false
+#| message: false
 #| label: fig-poisson
 #| fig-cap: "Distribution de Poisson"
 x <- 0:10
@@ -81,7 +84,7 @@ $$ \approx 3$$ On peut aussi exécuté le chunck en ligne pour rechercher le res
 
 ### Application Shiny - La Loi Gamma
 
-\*\* Rappel \*\* :
+**Rappel** :
 
 La loi de Gamma est une distribution de probabilité continue qui modélise des variables aléatoires réelles positives. Elle est utilisée pour décrire divers phénomènes, tels que la durée de vie d'un système ou le temps entre des événements.
 
@@ -95,9 +98,9 @@ curve(dgamma(x,alpha,lambda), 0, 10)
 
 @https://lapoulefolle64.shinyapps.io/Projet-Killani/
 
-## Analyse de Données : data = "mtcars"
+# Analyse de Données : data = "mtcars"
 
-### Analyse exploratoire
+## Analyse exploratoire
 
 Tout d'abord on commence par afficher les noms des colonnes du dataset avec la fonction ***names()***, puis on crée un résumé statistique, de tel sorte à obtenir en sortie un tableau présentant des stats (moyenne et écart-type) des variables mpg et cyl
 
@@ -109,7 +112,9 @@ voiture <- mtcars
 
 voiture|>names() ### pour voir le nom de chaque colonne
 
-voiture |> select(mpg, cyl) |> summarise(mean_mpg = mean(mpg), mean_cyl = mean(cyl), sd_mpg = sd(mpg), sd_cyl = sd(cyl) ) |> round(2) -> stat_desc
+voiture |> select(mpg, cyl) |> summarise(mean_mpg = mean(mpg),
+         mean_cyl = mean(cyl), sd_mpg = sd(mpg), 
+         sd_cyl = sd(cyl) ) |> round(2) -> stat_desc
 
 ```
 
@@ -120,8 +125,9 @@ library(dplyr)
 library(kableExtra)
 library(tidyverse)
 
-stat_desc |> matrix(c(20.02, 6.19, 6.03, 1.79), nrow = 2, ncol = 2, 
-                    dimnames = list(c("mean", "sd"), c("mpg", "cyl"))) |> kable() -> matrice
+stat_desc |> matrix(c(20.02, 6.19, 6.03, 1.79), nrow = 2, 
+             ncol = 2, dimnames = list(c("mean", "sd"),
+             c("mpg", "cyl"))) |> kable() -> matrice
 
 matrice
 ```
@@ -158,6 +164,8 @@ On constate une corrélation assez faible entre la puissance et la consommation
 Nous cherchons à expliquer la consommation (mpg) par la puissance (hp), en utilisant le jeu de donnée mtcars
 
 ```{r}
+#| warning: false
+#| message: false
 #| results: asis
 library(stargazer)
 library(ggplot2)
@@ -166,7 +174,13 @@ library(ggthemes)
 modele <- lm(mpg ~ hp, data = mtcars)
 
 # Tableau de régression 
-summary(modele, title = "Impact de la puissance (hp) sur la consommation (mpg)")
+# On commence par extrait les chiffre du summary
+resultats <- coef(summary(modele))
+
+#puis on met sous forme de tableau
+knitr::kable(resultats, digits = 3, 
+      caption = "Impact de la puissance (hp) sur
+                  la consommation (mpg)")
 
 # Visualisation
 ggplot(mtcars, aes(x = hp, y = mpg)) +
@@ -181,7 +195,7 @@ ggplot(mtcars, aes(x = hp, y = mpg)) +
 ***Le modèle de régression linéaire utilisé est le suivant : mpg \~ hp, ce qui signifie que la variable “mpg” est expliquée en fonction de la variable hp***
 
 \begin{itemize}
-  \item L’interceptt : son estimation est de 30.09, ce qui signifie que lorsque la variable hp est égale à zéro, la variable mpg est estimée à 30.09
+  \item L’intercept : son estimation est de 30.09, ce qui signifie que lorsque la variable hp est égale à zéro, la variable mpg est estimée à 30.09
 
   \item Le coefficient de hp : dson estimation est de -0.068, ce qui signifie que pour chaque unité d’augmentation de hp, la variable mpg diminue en moyenne de 0.068 unités
 \end{itemize}
@@ -193,7 +207,11 @@ En bref, notre modèle met en évidence le fait que la variable hp a un effet si
 ## Regression en Latex
 
 ```{r}
+#| warning: false
+#| message: false
 #| results: asis
+
+
 library(stargazer)
 
 modele = lm(mpg ~ hp, data = voiture)
@@ -205,22 +223,32 @@ stargazer(modele,
           dep.var.labels = "mpg",
           covariate.labels = "hp",
           digits = 3)
-
 ```
 
-### Regression avec ggplot
+## Regression avec ggplot
 
 ```{r}
+#| error: false
+#| warning: false
+#| message: false
 
-voiture |> ggplot(aes(hp, mpg)) + theme_igray() + ggtitle("Consommation en fonction de la puissance") + geom_point(col = "blue") + geom_smooth(method = "lm", se = FALSE, col = "red")
+voiture |> ggplot(aes(hp, mpg)) + theme_igray() + 
+  ggtitle("Consommation en fonction de la puissance") + 
+  geom_point(col = "blue") + geom_smooth(method = "lm", 
+  se = FALSE, col = "red")
 
 ```
 
-## Travail avec les données réel
+# Travail avec les données réel
 
 On importe les données historiques du jeu Keno, puis on transforme les données du format **large** (c'est à dire une une colonne par boule) au format **long** pour faciliter notre analyse
 
 ```{r}
+
+#| error: false
+#| warning: false
+#| message: false
+
 library(tidyr)
 library(lubridate)
 library(tidyr)
@@ -250,11 +278,17 @@ max(df1$date_de_tirage)
 ### Tableau des fréquences
 
 ```{r}
+#| error: false
+#| warning: false
+#| message: false
+
+
 library(scales)
 
 # Création du tableau des fréquences et pourcentages
-tableau_frequences <- df1 |> group_by(valeur) |> summarise(Frequence = n()) |>
-                   mutate(Pourcentage = percent(Frequence / sum(Frequence), accuracy = 0.01))
+tableau_frequences <- df1 |> group_by(valeur) |> 
+  summarise(Frequence = n()) |> 
+  mutate(Pourcentage = percent(Frequence / sum(Frequence), accuracy = 0.01))
 
 tableau_frequences
 
@@ -276,6 +310,10 @@ Sous l'hypothèse
 NB : Notons que si la p_value \< alpha : on rejette l'hypothese null
 
 ```{r}
+#| error: false
+#| warning: false
+#| message: false
+
 
 chisq.test(tableau_frequences$Frequence)
 
@@ -288,6 +326,10 @@ Le test de khi deux sortant une pvalue de 0.82, on conserve l'hypothése d'équi
 Afin de renforcer notre conclusion du khi deux, nous simulons 10 000 fois une série de 100 jours de tirages pour observer la distribution du minimum de fréquence (la boule qui sort le moins souvent).
 
 ```{r}
+#| error: false
+#| warning: false
+#| message: false
+
 
 set.seed(123)
 res <- c()
@@ -301,9 +343,15 @@ min(res)
 ```
 
 ```{r}
+#| error: false
+#| warning: false
+#| message: false
+
 library(ggplot2)
 
-as_tibble(res) |> ggplot(aes(value)) + geom_bar(col = "red") + ggtitle("Distribution empirique des minimum de fréquence de sortie sur 100 jours")
+as_tibble(res) |> ggplot(aes(value)) + 
+  geom_bar(col = "red") + 
+  ggtitle("Distribution empirique des minimum de fréquence de sortie sur 100 jours")
 ```
 
 ```{r}

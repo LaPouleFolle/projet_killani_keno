@@ -241,7 +241,7 @@
 \setcounter{page}{1}
 \pagestyle{fancy}
 
-\subsubsection{Package}\label{package}
+\#Package
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -262,7 +262,7 @@ Ce projet explore différents aspects de la statistique : de la théorie
 des lois de probabilité à l'analyse de données réelles (Keno) en
 s'inspirant de l'article \autocite{Evans2024}.
 
-\subsection{1. Probabilités
+\subsection{Probabilités
 Théoriques}\label{probabilituxe9s-thuxe9oriques}
 
 \subsubsection{Loi de Poisson}\label{loi-de-poisson}
@@ -322,7 +322,7 @@ le resultat qui est ici : 2.997
 \subsubsection{Application Shiny - La Loi
 Gamma}\label{application-shiny---la-loi-gamma}
 
-** Rappel ** :
+\textbf{Rappel} :
 
 La loi de Gamma est une distribution de probabilité continue qui
 modélise des variables aléatoires réelles positives. Elle est utilisée
@@ -344,10 +344,10 @@ shiny}\label{lancement-de-lapplication-shiny}
 
 \textcite{https://lapoulefolle64.shinyapps.io/Projet-Killani}/
 
-\subsection{Analyse de Données : data =
+\section{Analyse de Données : data =
 ``mtcars''}\label{analyse-de-donnuxe9es-data-mtcars}
 
-\subsubsection{Analyse exploratoire}\label{analyse-exploratoire}
+\subsection{Analyse exploratoire}\label{analyse-exploratoire}
 
 Tout d'abord on commence par afficher les noms des colonnes du dataset
 avec la fonction \textbf{\emph{names()}}, puis on crée un résumé
@@ -371,7 +371,9 @@ stats (moyenne et écart-type) des variables mpg et cyl
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{voiture }\SpecialCharTok{|\textgreater{}} \FunctionTok{select}\NormalTok{(mpg, cyl) }\SpecialCharTok{|\textgreater{}} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_mpg =} \FunctionTok{mean}\NormalTok{(mpg), }\AttributeTok{mean\_cyl =} \FunctionTok{mean}\NormalTok{(cyl), }\AttributeTok{sd\_mpg =} \FunctionTok{sd}\NormalTok{(mpg), }\AttributeTok{sd\_cyl =} \FunctionTok{sd}\NormalTok{(cyl) ) }\SpecialCharTok{|\textgreater{}} \FunctionTok{round}\NormalTok{(}\DecValTok{2}\NormalTok{) }\OtherTok{{-}\textgreater{}}\NormalTok{ stat\_desc}
+\NormalTok{voiture }\SpecialCharTok{|\textgreater{}} \FunctionTok{select}\NormalTok{(mpg, cyl) }\SpecialCharTok{|\textgreater{}} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mean\_mpg =} \FunctionTok{mean}\NormalTok{(mpg),}
+         \AttributeTok{mean\_cyl =} \FunctionTok{mean}\NormalTok{(cyl), }\AttributeTok{sd\_mpg =} \FunctionTok{sd}\NormalTok{(mpg), }
+         \AttributeTok{sd\_cyl =} \FunctionTok{sd}\NormalTok{(cyl) ) }\SpecialCharTok{|\textgreater{}} \FunctionTok{round}\NormalTok{(}\DecValTok{2}\NormalTok{) }\OtherTok{{-}\textgreater{}}\NormalTok{ stat\_desc}
 \end{Highlighting}
 \end{Shaded}
 
@@ -400,8 +402,9 @@ The following object is masked from 'package:dplyr':
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
 
-\NormalTok{stat\_desc }\SpecialCharTok{|\textgreater{}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{20.02}\NormalTok{, }\FloatTok{6.19}\NormalTok{, }\FloatTok{6.03}\NormalTok{, }\FloatTok{1.79}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }
-                    \AttributeTok{dimnames =} \FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"mean"}\NormalTok{, }\StringTok{"sd"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\StringTok{"mpg"}\NormalTok{, }\StringTok{"cyl"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \FunctionTok{kable}\NormalTok{() }\OtherTok{{-}\textgreater{}}\NormalTok{ matrice}
+\NormalTok{stat\_desc }\SpecialCharTok{|\textgreater{}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{20.02}\NormalTok{, }\FloatTok{6.19}\NormalTok{, }\FloatTok{6.03}\NormalTok{, }\FloatTok{1.79}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }
+             \AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{dimnames =} \FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"mean"}\NormalTok{, }\StringTok{"sd"}\NormalTok{),}
+             \FunctionTok{c}\NormalTok{(}\StringTok{"mpg"}\NormalTok{, }\StringTok{"cyl"}\NormalTok{))) }\SpecialCharTok{|\textgreater{}} \FunctionTok{kable}\NormalTok{() }\OtherTok{{-}\textgreater{}}\NormalTok{ matrice}
 
 \NormalTok{matrice}
 \end{Highlighting}
@@ -473,47 +476,40 @@ en utilisant le jeu de donnée mtcars
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(stargazer)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-
-Please cite as: 
-\end{verbatim}
-
-\begin{verbatim}
- Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.
-\end{verbatim}
-
-\begin{verbatim}
- R package version 5.2.3. https://CRAN.R-project.org/package=stargazer 
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(ggplot2)}
 \FunctionTok{library}\NormalTok{(ggthemes)}
 
 \NormalTok{modele }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(mpg }\SpecialCharTok{\textasciitilde{}}\NormalTok{ hp, }\AttributeTok{data =}\NormalTok{ mtcars)}
 
 \CommentTok{\# Tableau de régression }
-\FunctionTok{summary}\NormalTok{(modele, }\AttributeTok{title =} \StringTok{"Impact de la puissance (hp) sur la consommation (mpg)"}\NormalTok{)}
+\CommentTok{\# On commence par extrait les chiffre du summary}
+\NormalTok{resultats }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(}\FunctionTok{summary}\NormalTok{(modele))}
+
+\CommentTok{\#puis on met sous forme de tableau}
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(resultats, }\AttributeTok{digits =} \DecValTok{3}\NormalTok{, }
+      \AttributeTok{caption =} \StringTok{"Impact de la puissance (hp) sur}
+\StringTok{                  la consommation (mpg)"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Call: lm(formula = mpg \textasciitilde{} hp, data = mtcars)
-
-Residuals: Min 1Q Median 3Q Max -5.7121 -2.1122 -0.8854 1.5819 8.2360
-
-Coefficients: Estimate Std. Error t value
-Pr(\textgreater\textbar t\textbar)\\
-(Intercept) 30.09886 1.63392 18.421 \textless{} 2e-16 \textbf{\emph{ hp
--0.06823 0.01012 -6.742 1.79e-07 }} --- Signif. codes: 0
-`\emph{\textbf{' 0.001 '}' 0.01 '}' 0.05 `.' 0.1 ' ' 1
-
-Residual standard error: 3.863 on 30 degrees of freedom Multiple
-R-squared: 0.6024, Adjusted R-squared: 0.5892 F-statistic: 45.46 on 1
-and 30 DF, p-value: 1.788e-07
+\begin{longtable}[]{@{}lrrrr@{}}
+\caption{Impact de la puissance (hp) sur la consommation
+(mpg)}\tabularnewline
+\toprule\noalign{}
+& Estimate & Std. Error & t value &
+Pr(\textgreater\textbar t\textbar) \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+& Estimate & Std. Error & t value &
+Pr(\textgreater\textbar t\textbar) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+(Intercept) & 30.099 & 1.634 & 18.421 & 0 \\
+hp & -0.068 & 0.010 & -6.742 & 0 \\
+\end{longtable}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -526,10 +522,6 @@ and 30 DF, p-value: 1.788e-07
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-`geom_smooth()` using formula = 'y ~ x'
-\end{verbatim}
-
 \pandocbounded{\includegraphics[keepaspectratio]{Programme_Keno_files/figure-pdf/unnamed-chunk-8-1.pdf}}
 
 \subsubsection{Interprétation :}\label{interpruxe9tation}
@@ -539,7 +531,7 @@ mpg \textasciitilde{} hp, ce qui signifie que la variable ``mpg'' est
 expliquée en fonction de la variable hp}}
 
 \begin{itemize}
-  \item L’interceptt : son estimation est de 30.09, ce qui signifie que lorsque la variable hp est égale à zéro, la variable mpg est estimée à 30.09
+  \item L’intercept : son estimation est de 30.09, ce qui signifie que lorsque la variable hp est égale à zéro, la variable mpg est estimée à 30.09
 
   \item Le coefficient de hp : dson estimation est de -0.068, ce qui signifie que pour chaque unité d’augmentation de hp, la variable mpg diminue en moyenne de 0.068 unités
 \end{itemize}
@@ -572,8 +564,8 @@ unités
 \end{Shaded}
 
 \% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy
-Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Tue, May
-26, 2026 - 06:14:22 PM
+Institute. E-mail: marek.hlavac at gmail.com \% Date and time: Wed, May
+27, 2026 - 10:19:09 PM
 
 \begin{table}[!htbp] \centering 
   \caption{Modèle de régression du mpg expliqué par le hp} 
@@ -603,21 +595,20 @@ F Statistic & 45.460$^{***}$ (df = 1; 30) \\
 \end{tabular} 
 \end{table}
 
-\subsubsection{Regression avec ggplot}\label{regression-avec-ggplot}
+\subsection{Regression avec ggplot}\label{regression-avec-ggplot}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{voiture }\SpecialCharTok{|\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(hp, mpg)) }\SpecialCharTok{+} \FunctionTok{theme\_igray}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Consommation en fonction de la puissance"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{col =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\NormalTok{voiture }\SpecialCharTok{|\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(hp, mpg)) }\SpecialCharTok{+} \FunctionTok{theme\_igray}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Consommation en fonction de la puissance"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{col =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }
+  \AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-`geom_smooth()` using formula = 'y ~ x'
-\end{verbatim}
-
 \pandocbounded{\includegraphics[keepaspectratio]{Programme_Keno_files/figure-pdf/unnamed-chunk-10-1.pdf}}
 
-\subsection{Travail avec les données
+\section{Travail avec les données
 réel}\label{travail-avec-les-donnuxe9es-ruxe9el}
 
 On importe les données historiques du jeu Keno, puis on transforme les
@@ -626,6 +617,10 @@ boule) au format \textbf{long} pour faciliter notre analyse
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\#| error: false}
+\CommentTok{\#| warning: false}
+\CommentTok{\#| message: false}
+
 \FunctionTok{library}\NormalTok{(tidyr)}
 \FunctionTok{library}\NormalTok{(lubridate)}
 \FunctionTok{library}\NormalTok{(tidyr)}
@@ -683,31 +678,11 @@ boule) au format \textbf{long} pour faciliter notre analyse
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(scales)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-
-Attaching package: 'scales'
-\end{verbatim}
-
-\begin{verbatim}
-The following object is masked from 'package:purrr':
-
-    discard
-\end{verbatim}
-
-\begin{verbatim}
-The following object is masked from 'package:readr':
-
-    col_factor
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{\# Création du tableau des fréquences et pourcentages}
-\NormalTok{tableau\_frequences }\OtherTok{\textless{}{-}}\NormalTok{ df1 }\SpecialCharTok{|\textgreater{}} \FunctionTok{group\_by}\NormalTok{(valeur) }\SpecialCharTok{|\textgreater{}} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Frequence =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{|\textgreater{}}
-                   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Pourcentage =} \FunctionTok{percent}\NormalTok{(Frequence }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(Frequence), }\AttributeTok{accuracy =} \FloatTok{0.01}\NormalTok{))}
+\NormalTok{tableau\_frequences }\OtherTok{\textless{}{-}}\NormalTok{ df1 }\SpecialCharTok{|\textgreater{}} \FunctionTok{group\_by}\NormalTok{(valeur) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Frequence =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Pourcentage =} \FunctionTok{percent}\NormalTok{(Frequence }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(Frequence), }\AttributeTok{accuracy =} \FloatTok{0.01}\NormalTok{))}
 
 \NormalTok{tableau\_frequences}
 \end{Highlighting}
@@ -797,7 +772,9 @@ minimum de fréquence (la boule qui sort le moins souvent).
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(ggplot2)}
 
-\FunctionTok{as\_tibble}\NormalTok{(res) }\SpecialCharTok{|\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(value)) }\SpecialCharTok{+} \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribution empirique des minimum de fréquence de sortie sur 100 jours"}\NormalTok{)}
+\FunctionTok{as\_tibble}\NormalTok{(res) }\SpecialCharTok{|\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(value)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Distribution empirique des minimum de fréquence de sortie sur 100 jours"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
