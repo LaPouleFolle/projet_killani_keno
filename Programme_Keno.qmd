@@ -350,7 +350,7 @@ min(res)
 library(ggplot2)
 
 as_tibble(res) |> ggplot(aes(value)) + 
-  geom_bar(col = "red") + 
+  geom_bar(col = "blue") + 
   ggtitle("Distribution empirique des minimum de fréquence de sortie sur 100 jours")
 ```
 
