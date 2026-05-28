@@ -96,7 +96,7 @@ curve(dgamma(x,alpha,lambda), 0, 10)
 
 ## Lancement de l'application shiny
 
-@https://lapoulefolle64.shinyapps.io/Projet-Killani/
+https://lapoulefolle64.shinyapps.io/Projet-Killani/
 
 # Analyse de Données : data = "mtcars"
 
